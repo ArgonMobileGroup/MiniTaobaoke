@@ -1,0 +1,23 @@
+<resources>
+
+    <style name="AppTheme" parent="@style/Theme.Sherlock.Light">
+         <!--  item name="actionBarTabBarStyle">@style/CustomTabBar</item -->
+         <item name="actionBarStyle">@style/CustomActionBar</item>
+    </style>
+    
+    <!--  style name="CustomTabBar" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">0dp</item>
+        <item name="android:background">#e5e5e5</item>
+    </style -->
+    
+    <!--   style name="CustomTabStyle" parent="@style/Widget.Sherlock.Light.ActionBar">
+        <item name="android:showDividers">none</item>
+        <item name="android:gravity">center</item>
+    </style>-->
+    
+    <style name="CustomActionBar" parent="@style/Widget.Sherlock.Light.ActionBar">
+        <item name="android:background">#e5e5e5</item>
+    </style>
+   
+</resources>

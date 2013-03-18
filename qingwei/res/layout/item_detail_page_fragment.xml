@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffdadbdb"
+    android:orientation="vertical"
+    android:padding="15dp" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_white_box"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="10dp" >
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="centerCrop"
+            android:src="#ffefefef" />
+        
+        <ListView
+            android:id="@+id/item_imgs"
+            android:layout_width="wrap_content"
+            android:layout_height="450dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/imageView1"
+            android:divider="#00000000"
+            android:dividerHeight="5dp" />
+        
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView1"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:autoLink="all"
+            android:text="List Item text here, image above"
+            android:textColor="#373d48"
+            android:textAppearance="?android:attr/textAppearance" />
+        
+        <TextView
+            android:id="@+id/nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="hello"
+            android:textColor="#33ccff"
+            android:textAppearance="?android:attr/textAppearance"  />
+        
+        <View 
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/nick"
+            android:layout_marginTop="20dp"
+            android:background="#efefef"/>
+        <RelativeLayout
+            android:id="@+id/price_buy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/promotion_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="price"
+                android:textColor="#333333"
+                android:textAppearance="?android:attr/textAppearanceLarge"  />
+            
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_alignBottom="@id/promotion_price"
+                android:layout_toRightOf="@id/promotion_price"
+                android:singleLine="true"
+                android:text="price"
+                android:textColor="#929292"
+                android:textAppearance="?android:attr/textAppearance"  />
+            
+        </RelativeLayout>
+        
+        <View 
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/price_buy"
+            android:layout_marginTop="10dp"
+            android:background="#efefef"/>
+        
+        <Button
+            android:id="@+id/buy_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider2"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_blue_box_button"
+            android:gravity="center"
+            android:text="Buy"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/delist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:singleLine="true"
+            android:text="宝贝下架喽"
+            android:textColor="#929292"
+            android:textAppearance="?android:attr/textAppearance"  />
+    </RelativeLayout>
+</RelativeLayout>
