@@ -23,6 +23,7 @@ import com.taobao.top.android.api.TopTqlListener;
 
 
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.annotation.SuppressLint;
@@ -144,38 +145,59 @@ public class MainActivity extends SherlockActivity {
 
 	private void refreshGoodsItems() {
 		
-		GoodsItemManager.instance().refresh(new OnGoodsItemLoadListener() {
-
-			@Override
-			public void onComplete(ArrayList<GoodsItem> mGoodsItems) {
-				// TODO Auto-generated method stub
-				mHandler.postDelayed(new Runnable() {
-
-					@Override
-					public void run() {
-						onLoadFinished();
-					}
-					
-				}, 1000);
-				mLoadSuccess = true;
-			}
-
-			@Override
-			public void onError(ApiError error) {
-				// TODO Auto-generated method stub
-				Log.d("SD_TRACE", "load api error" + error.toString());
-				mLoadSuccess = false;
-			}
-
-			@Override
-			public void onException(Exception e) {
-				// TODO Auto-generated method stub
-				Log.d("SD_TRACE", "load api exception" + e.toString());
-				mLoadSuccess  = false;
-			}
+		if(checkInternet()) {
 			
-		});
+			GoodsItemManager.instance().refresh(new OnGoodsItemLoadListener() {
+	
+				@Override
+				public void onComplete(ArrayList<GoodsItem> mGoodsItems) {
+					// TODO Auto-generated method stub
+					mHandler.postDelayed(new Runnable() {
+	
+						@Override
+						public void run() {
+							onLoadFinished();
+						}
+						
+					}, 1000);
+					mLoadSuccess = true;
+				}
+	
+				@Override
+				public void onError(ApiError error) {
+					// TODO Auto-generated method stub
+					Log.d("SD_TRACE", "load api error" + error.toString());
+					mLoadSuccess = false;
+				}
+	
+				@Override
+				public void onException(Exception e) {
+					// TODO Auto-generated method stub
+					Log.d("SD_TRACE", "load api exception" + e.toString());
+					mLoadSuccess  = false;
+				}
+				
+			});
+		} else {
+			mLoadSuccess = false;
+			onLoadFinished();
+		}
 	}
+	
+	public boolean checkInternet() {
+	    ConnectivityManager connec = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+	    android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
+	    // Here if condition check for wifi and mobile network is available or not.
+	    // If anyone of them is available or connected then it will return true, otherwise false;
+
+	    if (wifi != null && wifi.isConnected()) {
+	        return true;
+	    } else if (mobile != null && mobile.isConnected()) {
+	        return true;
+	    }
+	    return false;
+	}
 
 }

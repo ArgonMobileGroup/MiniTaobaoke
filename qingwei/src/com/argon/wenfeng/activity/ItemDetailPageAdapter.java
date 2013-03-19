@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 
@@ -174,12 +176,29 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
             return rootView;
         }
 
+		public boolean checkInternet() {
+		    ConnectivityManager connec = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		    android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		    android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+		    // Here if condition check for wifi and mobile network is available or not.
+		    // If anyone of them is available or connected then it will return true, otherwise false;
+
+		    if (wifi != null && wifi.isConnected()) {
+		        return true;
+		    } else if (mobile != null && mobile.isConnected()) {
+		        return true;
+		    }
+		    return false;
+		}
+
+		
 		private void updateItemImgs(Long numId) {
+			
 			GoodsItemManager.instance().loadGoodsItemsDetail(numId, new OnGoodsItemDetailLoadListener() {
 
 				@Override
 				public void onComplete(GoodsItemDetail goodsItemDetail) {
-					
 					final GoodsItemDetail item = goodsItemDetail;
 					mItemImgs = item.getItemImgs();
 					mHandler.post(new Runnable() {
@@ -207,16 +226,38 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 				@Override
 				public void onError(ApiError error) {
 					// TODO Auto-generated method stub
-					
+					loadError(error);
+				}
+
+				private void loadError(ApiError error) {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(mContext, "Network error!", Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 
 				@Override
 				public void onException(Exception e) {
-					// TODO Auto-generated method stub
-					
+					loadException(e);
+				}
+
+				private void loadException(Exception e) {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(mContext, "Network error!", Toast.LENGTH_SHORT).show();
+						}
+					});
 				}
 	        	
 	        });
+		}
+
+		protected void loadFinished() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 
