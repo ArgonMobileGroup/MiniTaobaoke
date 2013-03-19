@@ -11,8 +11,10 @@ MiniTaobaoke
 
 ### TODO
 
-disable landscape
+~~disable landscape~~
 
 handle exception on detail page
 
 add different screen support
+
+move the string resources to res/value
