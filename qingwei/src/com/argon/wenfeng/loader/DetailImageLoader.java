@@ -45,7 +45,6 @@ public class DetailImageLoader {
     
     public void DisplayImage(String url, ImageView imageView)
     {
-    	url = url + "_600x600.jpg";
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null)

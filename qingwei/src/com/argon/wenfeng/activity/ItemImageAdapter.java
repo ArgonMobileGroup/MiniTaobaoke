@@ -48,18 +48,12 @@ public class ItemImageAdapter extends ArrayAdapter<ItemImg> {
 			holder.mPicture = (ImageView) convertView .findViewById(R.id.imageView1);
 			convertView.setTag(holder);
             
-			convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
 		}
 
 		holder = (ViewHolder) convertView.getTag();
 
 		//holder.mPicture.setVisibility(View.VISIBLE);
-		mLoader.displayImage(getItem(position).mImgUrl, holder.mPicture);
+		mLoader.displayImage(getItem(position).mImgUrl + "_100x100.jpg", holder.mPicture);
 		return convertView;
 	}
 	

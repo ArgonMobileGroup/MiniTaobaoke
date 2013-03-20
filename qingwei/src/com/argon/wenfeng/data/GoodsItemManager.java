@@ -252,7 +252,7 @@ public class GoodsItemManager {
 							for(int i = 0; i < itemImgs.length(); i++) {
 								
 								ItemImg itemImg = new ItemImg();
-								itemImg.mImgUrl = itemImgs.getJSONObject(i).getString("url") + "_100x100.jpg";
+								itemImg.mImgUrl = itemImgs.getJSONObject(i).getString("url");
 								//itemImg.mImgUrl = itemImgs.getJSONObject(i).getString("url");
 								
 								goodsItemDetail.getItemImgs().add(itemImg);

@@ -33,6 +33,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -110,7 +112,7 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 		@Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.item_detail_page_fragment, container, false);
+            final View rootView = inflater.inflate(R.layout.item_detail_page_fragment, container, false);
             Bundle args = getArguments();
             int position = mPosition;
             final GoodsItem item = GoodsItemManager.instance().getGoodsItems().get(position);
@@ -120,7 +122,7 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
             
 //            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
 //                    Integer.toString(args.getInt(ARG_OBJECT)));
-            mLoader.DisplayImage(item.getPicUrl(), (ImageView)rootView.findViewById(R.id.imageView1));
+            mLoader.DisplayImage(item.getPicUrl() + "_400x400.jpg", (ImageView)rootView.findViewById(R.id.imageView1));
             TextView title = (TextView) rootView.findViewById(R.id.title);
             title.setText(Html.fromHtml(item.getTitle()));
             
@@ -148,6 +150,19 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
             mItemImgsView.setTextFilterEnabled(true);
             mItemImgsView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             mItemImgsView.setItemChecked(0, true);
+            
+            mItemImgsView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> adapter, View view,
+						int position, long id) {
+					mItemImgsView.setItemChecked(position, true);
+					
+					mLoader.DisplayImage(mItemImageAdapter.getItem(position).mImgUrl + "_400x400.jpg", 
+							(ImageView)rootView.findViewById(R.id.imageView1));
+				}
+            	
+            });
             
             updateItemImgs(item.getNumberId());
             

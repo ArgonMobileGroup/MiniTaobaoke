@@ -155,7 +155,7 @@ public class GoodsItemAdapter extends ArrayAdapter<GoodsItem> {
 			holder = (ViewHolder) convertView.getTag();
 	
 			holder.mPicture.setVisibility(View.VISIBLE);
-			mLoader.displayImage(getItem(position).getPicUrl(), holder.mPicture);
+			mLoader.displayImage(getItem(position).getPicUrl()  + "_400x400.jpg", holder.mPicture);
 			holder.mTitle.setText(Html.fromHtml(getItem(position).getTitle()));
 			holder.mNick.setText(getItem(position).getNick());
 			holder.mPrice.setText("гд" + getItem(position).getPromotionPrice());
