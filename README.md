@@ -13,8 +13,10 @@ MiniTaobaoke
 
 ~~disable landscape~~
 
-handle exception on detail page
+~~handle exception on detail page~~
 
-add different screen support
+~~add different screen support~~
 
 move the string resources to res/value
+
+add google analytics support
