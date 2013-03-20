@@ -20,3 +20,7 @@ MiniTaobaoke
 move the string resources to res/value
 
 add google analytics support
+
+add About 
+
+add Share
