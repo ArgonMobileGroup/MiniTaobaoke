@@ -10,4 +10,7 @@
     <dimen name="goods_item_img_height">150dp</dimen>
     <dimen name="goods_item_detail_img_width">250dp</dimen>
     <dimen name="goods_item_detail_img_height">250dp</dimen>
+    
+    <dimen name="goods_item_imgs_width">50dp</dimen>
+    <dimen name="goods_item_imgs_height">50dp</dimen>
 </resources>

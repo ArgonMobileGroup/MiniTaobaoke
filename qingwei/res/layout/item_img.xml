@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_white_box_button"
+    android:layout_width="@dimen/goods_item_imgs_width"
+    android:layout_height="@dimen/goods_item_imgs_height"
+    android:background="@drawable/bg_item_image"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="2dp" >
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:background="#ffefefef"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="List Item text here, image above"
-        android:textColor="#373d48"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <TextView
-        android:id="@+id/nick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="hello"
-        android:textColor="#929292"
-        android:textAppearance="?android:attr/textAppearanceSmall"   />
 </LinearLayout>

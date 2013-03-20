@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MainApplication extends Application {
 	
@@ -17,6 +18,9 @@ public class MainApplication extends Application {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Log.d("SD_TRACE", "checkInternet: " + checkInternet());
+			if(checkInternet() == false) {
+				Toast.makeText(MainApplication.this, "Network error!", Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 	

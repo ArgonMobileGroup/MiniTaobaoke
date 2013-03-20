@@ -36,7 +36,6 @@ public class ItemImageAdapter extends ArrayAdapter<ItemImg> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.d("SD_TRACE", "get view!!!!!");
 		ViewHolder holder;
 
 		if (convertView == null) {
