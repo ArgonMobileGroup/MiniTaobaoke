@@ -54,14 +54,14 @@ public class GoodsItemAdapter extends ArrayAdapter<GoodsItem> {
 		if (convertView == null) {
 			LayoutInflater layoutInflator = LayoutInflater.from(getContext());
 			
-			if ( position % 3 == 0 && position != (getCount() - 1) ) {
-				convertView = layoutInflator.inflate(R.layout.element_item_large, parent, false);
-            } else if (position != (getCount() - 1)) {
-            	convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
-            } else {
-            	convertView = layoutInflator.inflate(R.layout.element_item_large, parent, false);
-            }
-
+//			if ( position % 3 == 0 && position != (getCount() - 1) ) {
+//				convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
+//            } else if (position != (getCount() - 1)) {
+//            	convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
+//            } else {
+//            	convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
+//            }
+			convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
 			holder = new ViewHolder();
 			holder.mPicture = (ImageView) convertView .findViewById(R.id.imageView1);
 			holder.mTitle = (TextView) convertView.findViewById(R.id.textView1);
@@ -84,7 +84,7 @@ public class GoodsItemAdapter extends ArrayAdapter<GoodsItem> {
 		Log.d("SD_TRACE", "position: " + position);
 		if( position == (getCount() - 1)) {
 			LayoutInflater layoutInflator = LayoutInflater.from(getContext());
-			convertView = layoutInflator.inflate(R.layout.element_item_large, parent, false);
+			convertView = layoutInflator.inflate(R.layout.element_item, parent, false);
 			lp = new LayoutParams(convertView.getLayoutParams());
         	lp.span = 2;
     		convertView.setLayoutParams(lp);

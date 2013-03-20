@@ -14,8 +14,8 @@
         android:padding="10dp" >
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="450dp"
-            android:layout_height="450dp"
+            android:layout_width="@dimen/goods_item_detail_img_width"
+            android:layout_height="@dimen/goods_item_detail_img_height"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"
@@ -26,7 +26,7 @@
         <ListView
             android:id="@+id/item_imgs"
             android:layout_width="wrap_content"
-            android:layout_height="450dp"
+            android:layout_height="@dimen/goods_item_detail_img_height"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_alignParentTop="true"

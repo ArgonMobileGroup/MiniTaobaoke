@@ -8,20 +8,12 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/goods_item_img_height"
         android:layout_gravity="center_horizontal"
         android:background="#ffefefef"
         android:scaleType="centerCrop" />
     
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:text="$122.00"
-        android:textColor="#929292"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    
     
     <TextView
         android:id="@+id/textView1"
@@ -34,15 +26,30 @@
         android:text="List Item text here, image above"
         android:textColor="#373d48"
         android:textAppearance="?android:attr/textAppearance" />
-    
+    <View android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp" 
+        android:layout_below="@id/textView1"
+        android:layout_centerHorizontal="true"/>
     <TextView
         android:id="@+id/nick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView1"
+        android:layout_toLeftOf="@id/strut"
         android:gravity="center_vertical"
         android:singleLine="true"
         android:text="hello"
         android:textColor="#929292"
         android:textAppearance="?android:attr/textAppearanceSmall"   />
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/strut"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="$122.00"
+        android:textColor="#929292"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 </RelativeLayout>
