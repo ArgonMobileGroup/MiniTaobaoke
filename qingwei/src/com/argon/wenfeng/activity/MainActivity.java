@@ -15,6 +15,10 @@ import com.argon.wenfeng.R;
 import com.argon.wenfeng.data.GoodsItem;
 import com.argon.wenfeng.data.GoodsItemManager;
 import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.taobao.top.android.TopAndroidClient;
 import com.taobao.top.android.TopParameters;
 import com.taobao.top.android.api.ApiError;
@@ -49,6 +53,9 @@ public class MainActivity extends SherlockActivity {
 	
 	private GoodsItemAdapter mGoodsAdapter;
 
+	private Tracker mGaTracker;
+	private GoogleAnalytics mGaInstance;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +75,15 @@ public class MainActivity extends SherlockActivity {
         mSGV.setItemMargin(10);
         mGoodsAdapter.notifyDataSetChanged();
         
+        mGaInstance = GoogleAnalytics.getInstance(this);
+        mGaTracker = mGaInstance.getTracker("UA-39513550-1");
+        
+	}
+	
+	@Override
+	public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance().activityStart(this); // Add this method.
 	}
 	
 	@Override
@@ -78,6 +94,12 @@ public class MainActivity extends SherlockActivity {
 		}
 		//refreshGoodsItems();
 	}
+	
+	@Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance().activityStop(this); // Add this method.
+	  }
 
 	private MenuItem mRefreshItem;
 
@@ -105,19 +127,20 @@ public class MainActivity extends SherlockActivity {
      * Refresh the fragment's list
      */
     public void refresh() {
+    	
+	    mGaTracker.sendEvent("ui_action", "button_press", "refresh_button", new Long(12345));
+        /* Attach a rotating ImageView to the refresh item as an ActionView */
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
+
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh);
+        rotation.setRepeatCount(Animation.INFINITE);
+        iv.startAnimation(rotation);
+
+        mSGV.setVisibility(View.INVISIBLE);
         
-            /* Attach a rotating ImageView to the refresh item as an ActionView */
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
-
-            Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_refresh);
-            rotation.setRepeatCount(Animation.INFINITE);
-            iv.startAnimation(rotation);
-
-            mSGV.setVisibility(View.INVISIBLE);
-            
-            mRefreshItem.setActionView(iv);
-            refreshGoodsItems();
+        mRefreshItem.setActionView(iv);
+        refreshGoodsItems();
         
     }
 	
@@ -144,6 +167,7 @@ public class MainActivity extends SherlockActivity {
 	protected boolean mLoadSuccess = true;
 
 	private void refreshGoodsItems() {
+		
 		
 		if(checkInternet()) {
 			

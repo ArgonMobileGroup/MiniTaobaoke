@@ -7,6 +7,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.argon.wenfeng.R;
 import com.argon.wenfeng.R.layout;
 import com.argon.wenfeng.R.menu;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -25,6 +27,9 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
     ViewPager mViewPager;
     
     private ItemDetailPageAdapter mItemDetailPageAdapter = null;
+    
+    private Tracker mGaTracker;
+	private GoogleAnalytics mGaInstance;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
         mViewPager.setCurrentItem(getIntent().getIntExtra("SHOW_POSITION", 0));
 //        int pos = getIntent().getIntExtra("SHOW_POSITION", 0);
 //        mItemDetailPageAdapter.setPrimaryItem(mViewPager, pos, mItemDetailPageAdapter.instantiateItem(mViewPager, pos));
+        
+        mGaInstance = GoogleAnalytics.getInstance(this);
+        mGaTracker = mGaInstance.getTracker("UA-39513550-1");
         
 	}
 
@@ -73,7 +81,6 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
                             // If there are ancestor activities, they should be added here.
                             .addNextIntent(upIntent)
                             .startActivities();
-                    Log.d("SD_TRACE", "start new Activity ???");
                     finish();
                 } else {
                 	finish();

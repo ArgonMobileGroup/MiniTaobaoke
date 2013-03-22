@@ -11,6 +11,8 @@ import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemDetailLoadListener;
 import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
 import com.argon.wenfeng.loader.DetailImageLoader;
 import com.argon.wenfeng.loader.ImageLoader;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.taobao.top.android.api.ApiError;
 
 import android.annotation.SuppressLint;
@@ -48,9 +50,16 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 	private final ImageLoader mItemImageLoader;
 	private final Context mContext;
 	
+	private Tracker mGaTracker;
+	private GoogleAnalytics mGaInstance;
+	
 	public ItemDetailPageAdapter(Context context, FragmentManager fm) {
 		super(fm);
 		mContext = context;
+		
+		mGaInstance = GoogleAnalytics.getInstance(mContext);
+        mGaTracker = mGaInstance.getTracker("UA-39513550-1");
+		
 		mLoader = new DetailImageLoader(context);
 		mItemImageLoader = new ImageLoader(context);
 	}
@@ -171,6 +180,8 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 
 				@Override
 				public void onClick(View v) {
+					
+					mGaTracker.sendEvent("ui_action", "button_press", "buy_button", Long.getLong(item.getPromotionPrice(), 0));
 					Uri clickUri = Uri.parse(item.getClickUrl());
 					mContext.startActivity(new Intent(Intent.ACTION_VIEW, clickUri));
 				}

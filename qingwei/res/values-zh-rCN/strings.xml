@@ -4,6 +4,7 @@
     <string name="app_name">Wing</string>
     <string name="action_settings">"设置"</string>
     <string name="action_refresh">"刷新"</string>
+    <string name="action_share">"分享"</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_item">"物品"</string>
     <string name="buy">"购买"</string>
