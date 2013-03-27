@@ -1,6 +1,7 @@
 package com.argon.wenfeng.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.argon.wenfeng.R;
 import com.argon.wenfeng.data.GoodsItem;
@@ -14,6 +15,7 @@ import com.argon.wenfeng.loader.ImageLoader;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.taobao.top.android.api.ApiError;
+import com.umeng.analytics.MobclickAgent;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -180,6 +182,10 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 
 				@Override
 				public void onClick(View v) {
+					
+					HashMap<String, String> purchase= new HashMap<String, String>();
+					purchase.put("price", item.getPromotionPrice());
+					MobclickAgent.onEvent(mContext, "purchase", purchase);
 					
 					mGaTracker.sendEvent("ui_action", "button_press", "buy_button", Long.getLong(item.getPromotionPrice(), 0));
 					Uri clickUri = Uri.parse(item.getClickUrl());

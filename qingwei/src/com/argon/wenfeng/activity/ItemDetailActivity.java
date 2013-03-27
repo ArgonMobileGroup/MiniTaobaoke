@@ -7,8 +7,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.argon.wenfeng.R;
 import com.argon.wenfeng.R.layout;
 import com.argon.wenfeng.R.menu;
+import com.argon.wenfeng.data.GoodsItemManager;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.UMFeedbackService;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -34,6 +37,9 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		MobclickAgent.onError(this);
+		
 		setContentView(R.layout.activity_item);
 		
 		// Set up action bar.
@@ -57,6 +63,20 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
         mGaInstance = GoogleAnalytics.getInstance(this);
         mGaTracker = mGaInstance.getTracker("UA-39513550-1");
         
+	}
+	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+		//refreshGoodsItems();
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
 	}
 
 	@Override
@@ -85,6 +105,10 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
                 } else {
                 	finish();
                 }
+                return true;
+                
+            case R.id.action_feedback:
+            	UMFeedbackService.openUmengFeedbackSDK(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

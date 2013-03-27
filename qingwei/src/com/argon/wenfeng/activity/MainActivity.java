@@ -1,6 +1,7 @@
 package com.argon.wenfeng.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import org.json.JSONArray;
@@ -24,6 +25,9 @@ import com.taobao.top.android.TopParameters;
 import com.taobao.top.android.api.ApiError;
 import com.taobao.top.android.api.TopApiListener;
 import com.taobao.top.android.api.TopTqlListener;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.NotificationType;
+import com.umeng.fb.UMFeedbackService;
 
 
 
@@ -59,6 +63,10 @@ public class MainActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		MobclickAgent.onError(this);
+		UMFeedbackService.enableNewReplyNotification(this, NotificationType.AlertDialog);
+		
 		setContentView(R.layout.activity_main);
 		
 		mGoodsAdapter = new GoodsItemAdapter(this, 
@@ -83,23 +91,32 @@ public class MainActivity extends SherlockActivity {
 	@Override
 	public void onStart() {
 	    super.onStart();
-	    EasyTracker.getInstance().activityStart(this); // Add this method.
+	    EasyTracker.getInstance().activityStart(this);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
 		if(GoodsItemManager.instance().getGoodsItems().size() == 0) {
 			refreshGoodsItems();
 		}
+		
+		MobclickAgent.onResume(this);
 		//refreshGoodsItems();
 	}
 	
 	@Override
-	  public void onStop() {
-	    super.onStop();
-	    EasyTracker.getInstance().activityStop(this); // Add this method.
-	  }
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+	    EasyTracker.getInstance().activityStop(this);
+	}
 
 	private MenuItem mRefreshItem;
 
@@ -117,6 +134,9 @@ public class MainActivity extends SherlockActivity {
             mRefreshItem = item;
             refresh();
             return true;
+        case R.id.action_feedback:
+        	UMFeedbackService.openUmengFeedbackSDK(this);
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -127,6 +147,7 @@ public class MainActivity extends SherlockActivity {
      * Refresh the fragment's list
      */
     public void refresh() {
+    	MobclickAgent.onEvent(this, "refresh");
     	
 	    mGaTracker.sendEvent("ui_action", "button_press", "refresh_button", new Long(12345));
         /* Attach a rotating ImageView to the refresh item as an ActionView */
