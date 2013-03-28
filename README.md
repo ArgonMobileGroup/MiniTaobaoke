@@ -17,10 +17,12 @@ MiniTaobaoke
 
 ~~add different screen support~~
 
-move the string resources to res/value
+~~move the string resources to res/value~~
 
-add google analytics support
+~~add google analytics support~~
 
-add About 
+no animation when do the refresh
+
+add About
 
 add Share
