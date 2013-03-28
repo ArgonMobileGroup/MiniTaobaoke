@@ -42,7 +42,7 @@ public class GoodsItemManager {
 
 	private static GoodsItemManager mInstance;
 	
-	private TopAndroidClient mTopClient = TopAndroidClient.getAndroidClientByAppKey("21398750");
+	private TopAndroidClient mTopClient = TopAndroidClient.getAndroidClientByAppKey("21400902");
 	
 	private ArrayList<GoodsItem> mGoodsItems = new ArrayList<GoodsItem>();
 	private int mCurrentPage = 1;

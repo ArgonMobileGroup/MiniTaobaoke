@@ -29,9 +29,9 @@ public class MainApplication extends Application {
 		super.onCreate();
 		
 		TopAndroidClient.registerAndroidClient(getApplicationContext(), 
-				"21398750",       
-				"50fec5dc44d55a862f514c62af3212fa", 
-				"com.argon.wenfeng.activity://authresult");
+				"21400902",       
+				"78cbf3e688d01e369c771ec511aed926", 
+				"com.dande.activity://authresult");
 		
 		Log.d("SD_TRACE", "register android client");
 		
