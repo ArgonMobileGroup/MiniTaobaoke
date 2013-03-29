@@ -3,6 +3,7 @@ package com.argon.wenfeng.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import android.content.Intent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -136,6 +137,11 @@ public class MainActivity extends SherlockActivity {
             return true;
         case R.id.action_feedback:
         	UMFeedbackService.openUmengFeedbackSDK(this);
+            return true;
+        case R.id.action_about:
+        	Intent intent = new Intent();
+        	intent.setClass(MainActivity.this, AboutActivity.class);  
+        	MainActivity.this.startActivity(intent);  
             return true;
         default:
             return super.onOptionsItemSelected(item);
