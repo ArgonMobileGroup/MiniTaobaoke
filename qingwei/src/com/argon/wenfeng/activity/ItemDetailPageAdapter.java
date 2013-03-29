@@ -3,20 +3,6 @@ package com.argon.wenfeng.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.argon.wenfeng.R;
-import com.argon.wenfeng.data.GoodsItem;
-import com.argon.wenfeng.data.GoodsItemDetail;
-import com.argon.wenfeng.data.GoodsItemDetail.ItemImg;
-import com.argon.wenfeng.data.GoodsItemManager;
-import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemDetailLoadListener;
-import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
-import com.argon.wenfeng.loader.DetailImageLoader;
-import com.argon.wenfeng.loader.ImageLoader;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
-import com.taobao.top.android.api.ApiError;
-import com.umeng.analytics.MobclickAgent;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -26,11 +12,9 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.text.Html;
-import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +29,24 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
+import com.argon.wenfeng.R;
+import com.argon.wenfeng.data.GoodsItem;
+import com.argon.wenfeng.data.GoodsItemDetail;
+import com.argon.wenfeng.data.GoodsItemDetail.ItemImg;
+import com.argon.wenfeng.data.GoodsItemManager;
+import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemDetailLoadListener;
+import com.argon.wenfeng.loader.DetailImageLoader;
+import com.argon.wenfeng.loader.ImageLoader;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+import com.taobao.top.android.api.ApiError;
+import com.umeng.analytics.MobclickAgent;
 
 public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 
@@ -67,8 +69,8 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 	}
 
 	@Override
-	public Fragment getItem(int postition) {
-		Fragment fragment = new ItemDetailPageFragment();
+	public SherlockFragment getItem(int postition) {
+		SherlockFragment fragment = new ItemDetailPageFragment();
         Bundle args = new Bundle();
 //        args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
         args.putInt("ITEM_POSITION", postition);
@@ -83,7 +85,7 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 	}
 	
 	@SuppressLint("ValidFragment")
-	public class ItemDetailPageFragment extends Fragment {
+	public class ItemDetailPageFragment extends SherlockFragment {
 		
 		private int mPosition;
 		private Context mContext;
@@ -116,7 +118,7 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 	        GoodsItem item = GoodsItemManager.instance().getGoodsItems().get(mPosition);
 	        Long numId = item.getNumberId();
 	        
-	        
+	        setHasOptionsMenu(true);
 	    }
 
 		
@@ -208,6 +210,22 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
             return rootView;
         }
 
+		private ShareActionProvider mShareActionProvider;
+		
+		@Override
+	    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		      MenuItem menuItem = menu.findItem(R.id.share);
+		      // Get the provider and hold onto it to set/change the share intent.
+		      mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
+		      GoodsItem item = GoodsItemManager.instance().getGoodsItems().get(mPosition);
+		      
+		      Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		      shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
+		      shareIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(item.getTitle())+"\n"+item.getClickUrl());
+		      shareIntent.setType("text/plain");
+		      mShareActionProvider.setShareIntent(shareIntent);  
+	    }
+		
 		public boolean checkInternet() {
 		    ConnectivityManager connec = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 		    android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
