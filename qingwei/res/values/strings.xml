@@ -9,5 +9,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_item">Thing</string>
     <string name="buy">"Buy Now"</string>
+    <string name="loading">Loading...</string>
     <string name="share_subject">"Take a look at this thing from bioliving."</string>
 </resources>

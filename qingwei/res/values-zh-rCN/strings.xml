@@ -9,6 +9,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_item">"物品"</string>
     <string name="buy">"购买"</string>
+    <string name="loading">"努力加载中..."</string>
     <string name="share_subject">"这件百武西的东东看起来不错 :)"</string>
     
 </resources>
