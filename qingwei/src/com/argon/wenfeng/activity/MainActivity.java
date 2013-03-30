@@ -49,6 +49,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
@@ -60,6 +61,8 @@ public class MainActivity extends SherlockActivity {
 
 	private Tracker mGaTracker;
 	private GoogleAnalytics mGaInstance;
+
+	private ProgressBar mProgress;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,8 @@ public class MainActivity extends SherlockActivity {
         //mSGV.setAdapter(new EndlessGoodsItemAdapter(this, mGoodsAdapter, R.id.textView1));
         mSGV.setItemMargin(10);
         mGoodsAdapter.notifyDataSetChanged();
+        
+        mProgress = (ProgressBar) findViewById(R.id.progress);
         
         mGaInstance = GoogleAnalytics.getInstance(this);
         mGaTracker = mGaInstance.getTracker("UA-39513550-1");
@@ -165,6 +170,7 @@ public class MainActivity extends SherlockActivity {
         iv.startAnimation(rotation);
 
         mSGV.setVisibility(View.INVISIBLE);
+        mProgress.setVisibility(View.VISIBLE);
         
         mRefreshItem.setActionView(iv);
         refreshGoodsItems();
@@ -187,6 +193,7 @@ public class MainActivity extends SherlockActivity {
         	mRefreshItem.setActionView(null);
         }
         mSGV.setVisibility(View.VISIBLE);
+        mProgress.setVisibility(View.GONE);
     }
     
 	Handler mHandler = new Handler();
@@ -195,7 +202,8 @@ public class MainActivity extends SherlockActivity {
 
 	private void refreshGoodsItems() {
 		
-		
+		mProgress.setVisibility(View.VISIBLE);
+        
 		if(checkInternet()) {
 			
 			GoodsItemManager.instance().refresh(new OnGoodsItemLoadListener() {

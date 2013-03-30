@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="List Item text here, image above"
+        android:text="@string/loading"
         android:textColor="#373d48"
         android:textAppearance="?android:attr/textAppearance" />
     <View android:id="@+id/strut"
@@ -39,7 +39,6 @@
         android:layout_toLeftOf="@id/strut"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:text="hello"
         android:textColor="#929292"
         android:textAppearance="?android:attr/textAppearanceSmall"   />
     <TextView
@@ -49,7 +48,6 @@
         android:layout_toLeftOf="@id/strut"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="$122.00"
         android:textColor="#929292"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 </RelativeLayout>

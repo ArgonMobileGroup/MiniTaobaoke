@@ -19,7 +19,7 @@
 	        android:layout_alignParentTop="true"
 	        android:layout_alignParentLeft="true"
 	        android:scaleType="centerCrop"
-	        android:src="#ffefefef" />
+	        android:background="#ffefefef" />
 	    
 	    <ListView
 	        android:id="@+id/item_imgs"
