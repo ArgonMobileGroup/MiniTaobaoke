@@ -106,7 +106,11 @@ public class ItemDetailActivity extends SherlockFragmentActivity {
                 	finish();
                 }
                 return true;
-                
+            case R.id.action_about:
+            	Intent intent = new Intent();
+            	intent.setClass(ItemDetailActivity.this, AboutActivity.class);  
+            	ItemDetailActivity.this.startActivity(intent);  
+                return true;   
             case R.id.action_feedback:
             	UMFeedbackService.openUmengFeedbackSDK(this);
                 return true;
