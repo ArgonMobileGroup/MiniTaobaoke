@@ -9,6 +9,8 @@ MiniTaobaoke
 
 [EndlessAdapter](https://github.com/commonsguy/cwac-adapter/)
 
+[CardsUILib](https://github.com/nadavfima/cardsui-for-android/)
+
 ### TODO
 
 ~~disable landscape~~
@@ -21,8 +23,8 @@ MiniTaobaoke
 
 ~~add google analytics support~~
 
-no animation when do the refresh
+~~no animation when do the refresh~~
 
 add About
 
-add Share
+~~add Share~~

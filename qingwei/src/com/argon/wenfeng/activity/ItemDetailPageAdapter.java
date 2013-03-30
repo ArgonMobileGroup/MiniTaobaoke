@@ -184,12 +184,19 @@ public class ItemDetailPageAdapter extends FragmentStatePagerAdapter {
 
 				@Override
 				public void onClick(View v) {
+					new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+							HashMap<String, String> purchase= new HashMap<String, String>();
+							purchase.put("price", item.getPromotionPrice());
+							MobclickAgent.onEvent(mContext, "purchase", purchase);
+							
+							mGaTracker.sendEvent("ui_action", "button_press", "buy_button", Long.getLong(item.getPromotionPrice(), 0));
+						}
+						
+					}).run();
 					
-					HashMap<String, String> purchase= new HashMap<String, String>();
-					purchase.put("price", item.getPromotionPrice());
-					MobclickAgent.onEvent(mContext, "purchase", purchase);
-					
-					mGaTracker.sendEvent("ui_action", "button_press", "buy_button", Long.getLong(item.getPromotionPrice(), 0));
 					Uri clickUri = Uri.parse(item.getClickUrl());
 					mContext.startActivity(new Intent(Intent.ACTION_VIEW, clickUri));
 				}
