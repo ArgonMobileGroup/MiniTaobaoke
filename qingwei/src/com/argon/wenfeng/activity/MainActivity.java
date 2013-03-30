@@ -196,7 +196,8 @@ public class MainActivity extends SherlockActivity {
 
 	private void refreshGoodsItems() {
 		
-		
+		mProgress.setVisibility(View.VISIBLE);
+        
 		if(checkInternet()) {
 			
 			GoodsItemManager.instance().refresh(new OnGoodsItemLoadListener() {
