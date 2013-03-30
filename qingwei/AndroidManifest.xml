@@ -47,12 +47,15 @@
             android:label="@string/title_activity_item"
             android:screenOrientation="portrait" >
         </activity>
+        <activity android:name="com.argon.wenfeng.activity.AboutActivity"
+            android:label="@string/title_activity_about" />
         
         <activity android:name="com.umeng.fb.ui.SendFeedback"
 		    android:windowSoftInputMode="adjustResize" />
 		<activity android:name="com.umeng.fb.ui.FeedbackConversations" />
 		<activity android:name="com.umeng.fb.ui.FeedbackConversation"
 		    android:configChanges="keyboard" />
+
         
         <meta-data android:value="5152c26756240b4c84008504" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="github" android:name="UMENG_CHANNEL"/>
