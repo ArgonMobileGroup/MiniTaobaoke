@@ -113,9 +113,11 @@ public class GoodsItemManager {
 		TopParameters params = new TopParameters();
 		params.setMethod("taobao.taobaoke.items.get");
 		params.addParam("fields", "num_iid,nick,title,price,click_url,shop_click_url,pic_url,promotion_price");
+		params.addParam("nick", "¶ÅÅôÏö");
 		params.addParam("keyword", "°ÙÎäÎ÷");
 		params.addParam("start_credit", "4crown");
 		params.addParam("end_credit", "5goldencrown");
+		params.addParam("sort", "commissionNum_desc");
 		params.addParam("mall_item", "true");
 		params.addParam("page_no", "" + mCurrentPage);
 		params.addParam("page_size", "30");
@@ -133,14 +135,16 @@ public class GoodsItemManager {
 //		params.addParam("page_size", "30");
 //		params.addParam("is_mobile", "true");
 		
-		// Search for Bioliving
+		// Search for Liebo
 //		TopParameters params = new TopParameters();
 //		params.setMethod("taobao.taobaoke.items.get");
 //		params.addParam("fields", "num_iid,nick,title,price,click_url,shop_click_url,pic_url,promotion_price");
 //		params.addParam("keyword", "ÁÑ²¯");
-//		params.addParam("start_credit", "4crown");
+//		params.addParam("nick", "¶ÅÅôÏö");
+//		params.addParam("start_credit", "3goldencrown");
 //		params.addParam("end_credit", "5goldencrown");
 //		params.addParam("mall_item", "true");
+//		params.addParam("sort", "commissionVolume_desc");
 //		params.addParam("page_no", "" + mCurrentPage);
 //		params.addParam("page_size", "30");
 //		params.addParam("is_mobile", "true");
