@@ -1,59 +1,43 @@
 package com.argon.wenfeng.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuInflater;
-import com.argon.wenfeng.R;
-import com.argon.wenfeng.data.GoodsItem;
-import com.argon.wenfeng.data.GoodsItemManager;
-import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GAServiceManager;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
-import com.taobao.top.android.TopAndroidClient;
-import com.taobao.top.android.TopParameters;
-import com.taobao.top.android.api.ApiError;
-import com.taobao.top.android.api.TopApiListener;
-import com.taobao.top.android.api.TopTqlListener;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.fb.NotificationType;
-import com.umeng.fb.UMFeedbackService;
-
-
-
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.widget.StaggeredGridView;
-import android.support.v4.widget.StaggeredGridView.LayoutParams;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.argon.wenfeng.R;
+import com.argon.wenfeng.data.GoodsItem;
+import com.argon.wenfeng.data.GoodsItemManager;
+import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
+import com.devspark.sidenavigation.ISideNavigationCallback;
+import com.devspark.sidenavigation.SideNavigationView;
+import com.devspark.sidenavigation.SideNavigationView.Mode;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+import com.taobao.top.android.api.ApiError;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.NotificationType;
+import com.umeng.fb.UMFeedbackService;
+
 @SuppressLint("NewApi")
-public class MainActivity extends SherlockActivity {
+public class MainActivity extends SherlockActivity implements ISideNavigationCallback {
 
 	private StaggeredGridView mSGV;
 	
@@ -63,6 +47,8 @@ public class MainActivity extends SherlockActivity {
 	private GoogleAnalytics mGaInstance;
 
 	private ProgressBar mProgress;
+	
+	private SideNavigationView sideNavigationView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +78,12 @@ public class MainActivity extends SherlockActivity {
         mGaInstance = GoogleAnalytics.getInstance(this);
         mGaTracker = mGaInstance.getTracker("UA-39513550-1");
         
+        sideNavigationView = (SideNavigationView) findViewById(R.id.side_navigation_view);
+        sideNavigationView.setMenuItems(R.menu.side_navigation_menu);
+        sideNavigationView.setMenuClickCallback(this);
+        sideNavigationView.setMode(Mode.LEFT);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -136,6 +128,9 @@ public class MainActivity extends SherlockActivity {
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case android.R.id.home:
+            sideNavigationView.toggleMenu();
+            return true;
         case R.id.refresh:
             mRefreshItem = item;
             refresh();
@@ -153,6 +148,27 @@ public class MainActivity extends SherlockActivity {
         }
     }
 	
+	 @Override
+	    public void onSideNavigationItemClick(int itemId) {
+     	    Intent intent;
+	        switch (itemId) {
+	            case R.id.side_navigation_menu_home:
+	            	intent = new Intent(this, MainActivity.class);
+	            	startActivity(intent);
+	                break;
+	            case R.id.side_navigation_menu_browse:
+	            	intent = new Intent(this, BrowseActivity.class);
+	                startActivity(intent);
+	                break;
+	            case R.id.side_navigation_menu_settings:
+	            	intent = new Intent(this, SettingsActivity.class);
+	            	startActivity(intent);
+	                break;
+	            default:
+	                return;
+	        }
+	        finish();
+	    }
 	
 	/**
      * Refresh the fragment's list
