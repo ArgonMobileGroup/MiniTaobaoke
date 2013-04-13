@@ -48,7 +48,7 @@ public class MainActivity extends SherlockActivity implements ISideNavigationCal
 
 	private ProgressBar mProgress;
 	
-	private SideNavigationView sideNavigationView;
+	private SideNavigationView mSideNavigationView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +78,10 @@ public class MainActivity extends SherlockActivity implements ISideNavigationCal
         mGaInstance = GoogleAnalytics.getInstance(this);
         mGaTracker = mGaInstance.getTracker("UA-39513550-1");
         
-        sideNavigationView = (SideNavigationView) findViewById(R.id.side_navigation_view);
-        sideNavigationView.setMenuItems(R.menu.side_navigation_menu);
-        sideNavigationView.setMenuClickCallback(this);
-        sideNavigationView.setMode(Mode.LEFT);
+        mSideNavigationView = (SideNavigationView) findViewById(R.id.side_navigation_view);
+        mSideNavigationView.setMenuItems(R.menu.side_navigation_menu);
+        mSideNavigationView.setMenuClickCallback(this);
+        mSideNavigationView.setMode(Mode.LEFT);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
@@ -129,7 +129,7 @@ public class MainActivity extends SherlockActivity implements ISideNavigationCal
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
-            sideNavigationView.toggleMenu();
+            mSideNavigationView.toggleMenu();
             return true;
         case R.id.refresh:
             mRefreshItem = item;
