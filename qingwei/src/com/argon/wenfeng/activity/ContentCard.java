@@ -8,9 +8,9 @@ import android.widget.TextView;
 import com.argon.wenfeng.R;
 import com.fima.cardsui.objects.Card;
 
-public class MyCard extends Card {
+public class ContentCard extends Card {
 
-	public MyCard(String title,String desc,int image){
+	public ContentCard(String title,String desc,int image){
 		super(title,desc,image);
 	}
 
