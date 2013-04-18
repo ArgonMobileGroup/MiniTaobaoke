@@ -9,4 +9,8 @@
     <dimen name="goods_item_detail_img_height">200dp</dimen>
     
     <dimen name="goods_item_imgs_witdh">72dp</dimen>
+    
+    <dimen name="buy_button_bottom_margin">40dp</dimen>
+    <dimen name="buy_button_top_margin">50dp</dimen>
+    
 </resources>
