@@ -13,4 +13,8 @@
     <dimen name="buy_button_bottom_margin">40dp</dimen>
     <dimen name="buy_button_top_margin">50dp</dimen>
     
+    <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    
 </resources>

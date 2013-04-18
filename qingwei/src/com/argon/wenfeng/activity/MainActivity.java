@@ -7,15 +7,18 @@ import android.support.v4.widget.StaggeredGridView;
 import android.widget.ProgressBar;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.argon.wenfeng.R;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.NotificationType;
 import com.umeng.fb.UMFeedbackService;
 
 @SuppressLint("NewApi")
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends SlidingFragmentActivity {
 
 	private Tracker mGaTracker;
 	private GoogleAnalytics mGaInstance;
@@ -23,11 +26,14 @@ public class MainActivity extends SherlockFragmentActivity {
 	private Fragment mContent;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		MobclickAgent.onError(this);
 		UMFeedbackService.enableNewReplyNotification(this, NotificationType.AlertDialog);
+		
+		// set the Above View
+        setContentView(R.layout.content_frame);
 		
 		if (savedInstanceState != null)
 			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
@@ -38,13 +44,30 @@ public class MainActivity extends SherlockFragmentActivity {
 		
 		getSupportFragmentManager()
 		.beginTransaction()
-		.add(android.R.id.content, mContent)
+		.replace(R.id.content_frame, mContent)
 		.commit();
 
         mGaInstance = GoogleAnalytics.getInstance(this);
         mGaTracker = mGaInstance.getTracker("UA-39513550-1");
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        // set the Behind View
+     	setBehindContentView(R.layout.menu_frame);
+     	getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.menu_frame, new MenuFragment(this))
+		.commit();
+        
+        // customize the SlidingMenu
+        SlidingMenu sm = getSlidingMenu();
+        sm.setShadowWidthRes(R.dimen.shadow_width);
+//        sm.setShadowDrawable(R.drawable.shadow);
+        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        sm.setFadeDegree(0.35f);
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        
+        setSlidingActionBarEnabled(false);
+        
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -70,6 +93,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	public void onStop() {
 		super.onStop();
 	    EasyTracker.getInstance().activityStop(this);
+	}
+	
+	public void switchContent(Fragment fragment) {
+		mContent = fragment;
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, fragment)
+		.commit();
+		getSlidingMenu().showContent();
 	}
 
 }
