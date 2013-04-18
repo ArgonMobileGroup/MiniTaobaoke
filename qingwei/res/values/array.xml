@@ -3,8 +3,8 @@
 
     <string-array name="menu_items">
         <item>首页</item>
-        <item>浏览</item>
-        <item>设置</item>
+        <item>分类</item>
+        <item>关于</item>
         <item>反馈</item>
     </string-array>
 

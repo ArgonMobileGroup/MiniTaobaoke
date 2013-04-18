@@ -33,9 +33,9 @@ public class AboutActivity extends SherlockActivity {
      	mCardView.setSwipeable(false);
      	
     	// add AndroidViews Cards
-     	MyCard card1 = new MyCard(getResources().getString(R.string.title_card1),getResources().getString(R.string.description_card1),0);
-     	MyCard card2 = new MyCard(getResources().getString(R.string.title_card2),getResources().getString(R.string.description_card2),0);
-     	MyCard card3 = new MyCard(getResources().getString(R.string.title_card3),getResources().getString(R.string.description_card3),0);
+     	ContentCard card1 = new ContentCard(getResources().getString(R.string.title_card1),getResources().getString(R.string.description_card1),0);
+     	ContentCard card2 = new ContentCard(getResources().getString(R.string.title_card2),getResources().getString(R.string.description_card2),0);
+     	ContentCard card3 = new ContentCard(getResources().getString(R.string.title_card3),getResources().getString(R.string.description_card3),0);
      	mCardView.addCard(card1);
      	mCardView.addCard(card2);
      	mCardView.addCard(card3);

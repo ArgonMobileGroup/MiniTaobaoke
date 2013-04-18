@@ -1,7 +1,8 @@
 package com.argon.wenfeng.activity;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.argon.wenfeng.R;
+import com.umeng.fb.UMFeedbackService;
 
 /**
  * A fragment representing a list of Items.
@@ -20,6 +22,7 @@ import com.argon.wenfeng.R;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
+@SuppressLint("ValidFragment")
 public class MenuFragment extends ListFragment {
 
 	private Context mContext;
@@ -28,6 +31,7 @@ public class MenuFragment extends ListFragment {
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
 	 */
+	@SuppressLint("ValidFragment")
 	public MenuFragment(Context context) {
 		mContext = context;
 	}
@@ -57,6 +61,15 @@ public class MenuFragment extends ListFragment {
 		switch (position) {
 		case 0:
 			newContent = new MainFragment(getActivity());
+			break;
+		case 2:
+	        Intent intent = new Intent();
+	        intent.setClass(getActivity(), AboutActivity.class);
+	        intent.putExtra("index", position);
+	        startActivity(intent);
+	        break;
+		case 3:
+			UMFeedbackService.openUmengFeedbackSDK(mContext);
 			break;
 		}
 		if (newContent != null)

@@ -49,10 +49,6 @@
         </activity>
         <activity android:name="com.argon.wenfeng.activity.AboutActivity"
             android:label="@string/title_activity_about" />
-        <activity android:name="com.argon.wenfeng.activity.SettingsActivity" 
-            android:label="@string/settings"/>
-        <activity android:name="com.argon.wenfeng.activity.BrowseActivity"
-            android:label="@string/browse" />
         
         <activity android:name="com.umeng.fb.ui.SendFeedback"
 		    android:windowSoftInputMode="adjustResize" />
