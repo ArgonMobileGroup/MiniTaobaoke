@@ -13,6 +13,7 @@ import com.argon.wenfeng.data.GoodsItemManager.OnGoodsItemLoadListener;
 import com.taobao.top.android.api.ApiError;
 import com.umeng.fb.UMFeedbackService;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import android.widget.Toast;
  * to create an instance of this fragment.
  * 
  */
+@SuppressLint("ValidFragment")
 public class MainFragment extends SherlockFragment {
 
 	private StaggeredGridView mSGV;
@@ -50,6 +52,7 @@ public class MainFragment extends SherlockFragment {
 	
 	private MenuItem mRefreshItem;
 	
+	@SuppressLint("ValidFragment")
 	public MainFragment(Activity activity) {
 		// Required empty public constructor
 		mContext = activity;

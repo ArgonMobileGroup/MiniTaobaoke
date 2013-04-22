@@ -3,10 +3,8 @@ package com.argon.wenfeng.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.StaggeredGridView;
-import android.widget.ProgressBar;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.argon.wenfeng.R;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
@@ -70,6 +68,15 @@ public class MainActivity extends SlidingFragmentActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case android.R.id.home:
+        toggle();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+}
 	@Override
 	public void onStart() {
 	    super.onStart();
