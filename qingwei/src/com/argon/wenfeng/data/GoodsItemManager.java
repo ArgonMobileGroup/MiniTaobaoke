@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.argon.wenfeng.data.GoodsItemDetail;
 import com.argon.wenfeng.data.GoodsItemDetail.ItemImg;
 import com.taobao.top.android.TopAndroidClient;
 import com.taobao.top.android.TopParameters;
@@ -36,6 +35,16 @@ public class GoodsItemManager {
 		void onException(Exception e);
 
 	}
+	
+	public interface OnSellercatsLoadListener {
+
+		void onComplete(JSONArray array);
+
+		void onError(ApiError error);
+
+		void onException(Exception e);
+
+	}
 
 	private static final int UPDATE_STATUS_FINISHED = 0;
 	private static final int UPDATE_STATUS_ONGOING = 1;
@@ -50,6 +59,8 @@ public class GoodsItemManager {
 	private int mCurrentPosition = 0;
 	
 	private int mUpdateStatus = UPDATE_STATUS_FINISHED;
+	
+	private JSONArray mArray;
 	
 	public static GoodsItemManager instance() {
 		if(mInstance == null) {
@@ -307,4 +318,57 @@ public class GoodsItemManager {
 		return mGoodsItems;
 	}
 	
+	public void loadSellercats(final OnSellercatsLoadListener onSellercatsLoadListener) {
+		Log.d("SD_TRACE", "loadSellercats");
+		//mGoodsItems.clear();
+		//mCurrentPage = 1;
+		
+		// Search for Bioliving
+		TopParameters params = new TopParameters();
+		params.setMethod("taobao.sellercats.list.get");
+		params.addParam("nick", "°ÙÎäÎ÷Æì½¢µê");
+				
+		mTopClient.api(params, null, new TopApiListener() {
+
+			@Override
+			public void onComplete(JSONObject json) {
+				// TODO Auto-generated method stub
+				try {
+					mArray = json.getJSONObject("sellercats_list_get_response").getJSONObject("seller_cats").getJSONArray("seller_cat");
+				
+					onSellercatsLoadListener.onComplete(mArray);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				mUpdateStatus = UPDATE_STATUS_FINISHED;
+				synchronized(mGoodsItems) {
+					mGoodsItems.notify();
+				}
+			}
+
+			@Override
+			public void onError(ApiError error) {
+				// TODO Auto-generated method stub
+				Log.d("SD_TRACE", "load api error" + error.toString());
+				onSellercatsLoadListener.onError(error);
+				mUpdateStatus = UPDATE_STATUS_FINISHED;
+				synchronized(mGoodsItems) {
+					mGoodsItems.notify();
+				}
+			}
+
+			@Override
+			public void onException(Exception e) {
+				// TODO Auto-generated method stub
+				Log.d("SD_TRACE", "load api exception" + e.toString());
+				onSellercatsLoadListener.onException(e);
+				mUpdateStatus = UPDATE_STATUS_FINISHED;
+				synchronized(mGoodsItems) {
+					mGoodsItems.notify();
+				}
+			}
+			
+		}, true);
+	}
 }
