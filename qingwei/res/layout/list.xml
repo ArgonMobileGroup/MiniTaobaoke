@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/list_padding"
-    android:paddingRight="@dimen/list_padding" />
+    android:background="#454545"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#414141"
+        android:divider="#343434"
+        android:dividerHeight="1dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#282828" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="18dp"
+        android:paddingTop="18dp"
+        android:text="@string/sellercats"
+        android:textColor="#dbdbdb"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:paddingLeft="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="18dp"
+        android:background="#888888" />
+
+    <ListView
+        android:id="@+id/list_sellercats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#555555"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
