@@ -63,7 +63,7 @@ public class MainActivity extends SlidingFragmentActivity {
         sm.setFadeDegree(0.35f);
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         
-        setSlidingActionBarEnabled(false);
+        setSlidingActionBarEnabled(true);
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
