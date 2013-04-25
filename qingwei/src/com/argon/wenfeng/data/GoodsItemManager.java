@@ -38,7 +38,7 @@ public class GoodsItemManager {
 	
 	public interface OnSellercatsLoadListener {
 
-		void onComplete(JSONArray array);
+		void onComplete(ArrayList<Sellercat> sellercats);
 
 		void onError(ApiError error);
 
@@ -60,7 +60,7 @@ public class GoodsItemManager {
 	
 	private int mUpdateStatus = UPDATE_STATUS_FINISHED;
 	
-	private JSONArray mArray;
+	private ArrayList<Sellercat> mSellercats = new ArrayList<Sellercat>();
 	
 	public static GoodsItemManager instance() {
 		if(mInstance == null) {
@@ -320,10 +320,7 @@ public class GoodsItemManager {
 	
 	public void loadSellercats(final OnSellercatsLoadListener onSellercatsLoadListener) {
 		Log.d("SD_TRACE", "loadSellercats");
-		//mGoodsItems.clear();
-		//mCurrentPage = 1;
-		
-		// Search for Bioliving
+
 		TopParameters params = new TopParameters();
 		params.setMethod("taobao.sellercats.list.get");
 		params.addParam("nick", "°ÙÎäÎ÷Æì½¢µê");
@@ -334,9 +331,26 @@ public class GoodsItemManager {
 			public void onComplete(JSONObject json) {
 				// TODO Auto-generated method stub
 				try {
-					mArray = json.getJSONObject("sellercats_list_get_response").getJSONObject("seller_cats").getJSONArray("seller_cat");
-				
-					onSellercatsLoadListener.onComplete(mArray);
+					JSONArray array = json.getJSONObject("sellercats_list_get_response").getJSONObject("seller_cats").getJSONArray("seller_cat");
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject cat = array.getJSONObject(i);
+						Sellercat sellercat=new Sellercat();
+						
+						String name = cat.getString("name");
+						sellercat.setName(name);
+						Log.d("SD_TRACE", "get name: " + name);
+						
+						Long cid = cat.getLong("cid");
+						sellercat.setCid(cid);
+						Log.d("SD_TRACE", "get cid: " + cid);
+						
+						Long parentCid = cat.getLong("parent_cid");
+						sellercat.setParentCid(parentCid);
+						Log.d("SD_TRACE", "get parent cid: " + parentCid);
+						
+						mSellercats.add(sellercat);
+					}
+					onSellercatsLoadListener.onComplete(mSellercats);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
