@@ -2,9 +2,6 @@ package com.argon.wenfeng.activity;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +22,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.argon.wenfeng.R;
 import com.argon.wenfeng.data.GoodsItemManager;
 import com.argon.wenfeng.data.GoodsItemManager.OnSellercatsLoadListener;
+import com.argon.wenfeng.data.Sellercat;
 import com.taobao.top.android.api.ApiError;
 import com.umeng.fb.UMFeedbackService;
 
@@ -42,14 +40,17 @@ public class MenuFragment extends Fragment {
 	
 	private Handler mHandler = new Handler();
 	
-	private JSONArray mSellercats;
 	private ActionBar mActionBar;
 	
-	private ArrayList<Long> mCids=new ArrayList<Long>();;
-	private ArrayAdapter<String> mSellercatsListAdapter;
-	private ArrayAdapter<String> mChildAdapter;
-	private ArrayList<String> mSellercatsList=new ArrayList<String>();
-	private ArrayList<String> mChildList=new ArrayList<String>();
+	private ArrayList<Sellercat> mSellercats;
+	private ArrayList<String> mParentNames=new ArrayList<String>();
+	private ArrayList<String> mChildNames=new ArrayList<String>();
+	private ArrayList<Long> mParentCids=new ArrayList<Long>();
+	
+	private ArrayAdapter<String> mParentListAdapter;
+	private ArrayAdapter<String> mChildListAdapter;
+	
+
 	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,6 +74,8 @@ public class MenuFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		mActionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
 		
 		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(getActivity(), 
 				R.layout.list_item_1, R.id.text1, getResources().getStringArray(R.array.menu_items));
@@ -106,27 +109,28 @@ public class MenuFragment extends Fragment {
 			}
 		});
 		
-		mChildAdapter= new ArrayAdapter<String>(getActivity(), 
-				R.layout.sherlock_spinner_dropdown_item, mChildList);
+		mChildListAdapter= new ArrayAdapter<String>(getActivity(), 
+				R.layout.sherlock_spinner_dropdown_item, mChildNames);
 		
+		mParentListAdapter = new ArrayAdapter<String>(getActivity(), 
+				R.layout.list_item_1, R.id.text1, mParentNames);
 		ListView sellercatsListView =(ListView)getActivity().findViewById(R.id.list_sellercats);
-		mSellercatsListAdapter = new ArrayAdapter<String>(getActivity(), 
-				R.layout.list_item_1, R.id.text1, mSellercatsList);
-		sellercatsListView.setAdapter(mSellercatsListAdapter);
+		sellercatsListView.setAdapter(mParentListAdapter);
 		sellercatsListView.setOnItemClickListener(new OnItemClickListener() 
 		{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 			{
 				Fragment newContent = null;
-				
 				newContent = new MainFragment(getActivity());
-	    		mChildList.clear();
-	    		mChildList.add(mSellercatsList.get(position));
-	    		if (getChildList(mCids.get(position))) {
+				
+				String name = mParentNames.get(position);
+	    		mChildNames.clear();
+	    		mChildNames.add(name);
+	    		if (getChildList(mParentCids.get(position))) {
 	    			//禁用标题，设置下拉菜单
 	    			mActionBar.setDisplayShowTitleEnabled(false);
 	                mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-	        		mActionBar.setListNavigationCallbacks(mChildAdapter,
+	        		mActionBar.setListNavigationCallbacks(mChildListAdapter,
 	                        new OnNavigationListener() {
 	                            public boolean onNavigationItemSelected(int itemPosition,
 	                                    long itemId) {
@@ -138,37 +142,32 @@ public class MenuFragment extends Fragment {
 					//启用标题，设置成对应分类
 					mActionBar.setDisplayShowTitleEnabled(true);
 					mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-					mActionBar.setTitle(mSellercatsList.get(position));
-				}
-			
-				
+					mActionBar.setTitle(name);
+					}
+	    		
 				if (newContent != null)
 					switchFragment(newContent);
 			}
 		});
 		
-		mActionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		//读取分类
 		GoodsItemManager.instance().loadSellercats(new OnSellercatsLoadListener(){
 				@Override
-				public void onComplete(final JSONArray array) {
+				public void onComplete(final ArrayList<Sellercat> sellercats) {
 					// TODO Auto-generated method stub
 					mHandler.postDelayed(new Runnable() {
 
 						@Override
 						public void run() {
-							mSellercats=array;
-							try {
-									for (int i = 0; i < array.length(); i++) {
-										if (array.getJSONObject(i).getLong("parent_cid")==0) {
-											mSellercatsList.add(array.getJSONObject(i).getString("name"));
-											mCids.add(array.getJSONObject(i).getLong("cid"));
-										}
+							mSellercats=sellercats;
+							for (int i = 0; i < mSellercats.size(); i++) {
+								Sellercat cat=mSellercats.get(i);
+								if (cat.isParent()) {
+									mParentNames.add(cat.getName());
+									mParentCids.add(cat.getCid());
+									}
 								}
-									mSellercatsListAdapter.notifyDataSetChanged();
-								} catch (JSONException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+							mParentListAdapter.notifyDataSetChanged();
 							}
 					}, 500);
 				}
@@ -185,23 +184,19 @@ public class MenuFragment extends Fragment {
     		});
 	}
 
-	private Boolean getChildList(Long cid) {
+	private Boolean getChildList(long cid) {
 
-		try {
-			for (int i = 0; i < mSellercats.length(); i++) {
-				if (mSellercats.getJSONObject(i).getLong("parent_cid")==cid) {
-					mChildList.add(mSellercats.getJSONObject(i).getString("name"));
+		for (int i = 0; i < mSellercats.size(); i++) {
+			Sellercat cat=mSellercats.get(i);
+			if (cat.getParentCid()==cid) {
+				mChildNames.add(cat.getName());
 				}
-		}
-			if (mChildList.size()==1) {
-				return false;
 			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (mChildNames.size()==1) {
+			return false;
+			}
 		return true;
-	}
+		}
 	
 	// the meat of switching the above fragment
 	private void switchFragment(Fragment fragment) {
